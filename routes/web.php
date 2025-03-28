@@ -39,3 +39,7 @@ Route::get('/auth/google/callback', function () {
         return redirect('/login')->with('error', 'Terjadi kesalahan saat login dengan Google.');
     }
 });
+
+Route::get('/home', function () {
+    return view('home');
+});
