@@ -28,6 +28,7 @@ License: For each use you must have a valid license purchased only from above li
     <link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <!--end::Fonts-->
     <!--begin::Vendor Stylesheets(used for this page only)-->
     <!--end::Vendor Stylesheets-->
@@ -84,8 +85,11 @@ License: For each use you must have a valid license purchased only from above li
                 <!--end::Sidebar-->
                 <!--begin::Main-->
                 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
-                    <!--begin::Content wrapper-->
-                    @yield('content')
+                    <div class="d-flex flex-column flex-column-fluid">
+                        <!--begin::Content wrapper-->
+                        @yield('content')
+                    </div>
+
                     <!--end::Content wrapper-->
                 </div>
                 <!--end:::Main-->
@@ -107,6 +111,7 @@ License: For each use you must have a valid license purchased only from above li
     <!-- Load remaining styles -->
     @vite(['resources/assets/plugins/custom/datatables/datatables.bundle.css', 'resources/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css', 'resources/assets/plugins/global/plugins.bundle.css'])
     <!--end::Custom Javascript-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
     <!--end::Javascript-->
 </body>
 <!--end::Body-->

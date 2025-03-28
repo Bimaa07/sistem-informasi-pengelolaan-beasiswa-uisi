@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/login', function () {
@@ -42,4 +42,25 @@ Route::get('/auth/google/callback', function () {
 
 Route::get('/home', function () {
     return view('home');
+})->name('home');
+
+Route::get('available-scholarships', function () {
+    return view('available-scholarship');
+})->name('available-scholarship');
+Route::get('scholarship-history', function () {
+    return view('scholarship-history');
+})->name('scholarship-history');
+
+Route::get('/student-notification', function () {
+    return view('notification-student');
+})->name('notification-student');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/logout', function () {
+        Auth::logout();
+        session()->invalidate();
+        session()->regenerateToken();
+        return redirect()->route('login')->with('success', 'Anda telah berhasil logout.');
+    })->name('logout');
 });
