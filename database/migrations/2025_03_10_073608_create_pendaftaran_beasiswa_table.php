@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignId('beasiswa_id')->constrained('beasiswa')->onDelete('cascade');
             $table->enum('status', ['pending', 'diterima', 'ditolak'])->default('pending');
             $table->enum('tipe_pendaftaran', ['admin', 'mahasiswa']); // admin untuk full, mahasiswa untuk ongoing
-            $table->text('catatan')->nullable();
             $table->timestamps();
         });
     }

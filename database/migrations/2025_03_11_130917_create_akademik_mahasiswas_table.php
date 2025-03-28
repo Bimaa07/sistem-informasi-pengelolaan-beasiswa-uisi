@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('akademik_mahasiswas', function (Blueprint $table) {
+        Schema::create('akademik_mahasiswa', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('form_monev_id')->constrained('form_laporan_monitoring_dan_evaluasis')->onDelete('cascade');
+            $table->foreignId('form_monev_id')->constrained('form_laporan_monitoring_dan_evaluasi')->onDelete('cascade');
             $table->integer('semester');
             $table->decimal('ip', 3, 2)->nullable();
             $table->integer('sks_semester')->nullable();

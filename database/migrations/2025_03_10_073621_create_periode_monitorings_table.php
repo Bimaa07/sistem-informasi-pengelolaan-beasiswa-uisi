@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('periode_monitorings', function (Blueprint $table) {
+        Schema::create('periode_monitoring', function (Blueprint $table) {
             $table->id();
             $table->string('tahun_akademik');
             $table->date('tanggal_mulai');

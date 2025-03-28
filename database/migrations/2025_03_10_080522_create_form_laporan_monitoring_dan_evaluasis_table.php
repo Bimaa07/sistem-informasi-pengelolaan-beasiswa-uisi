@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('form_laporan_monitoring_dan_evaluasis', function (Blueprint $table) {
+        Schema::create('form_laporan_monitoring_dan_evaluasi', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pendaftar_id')->constrained('pendaftaran_beasiswa')->onDelete('cascade'); // Relasi ke pendaftaran beasiswa
             $table->string('nama_mahasiswa');
@@ -19,16 +19,6 @@ return new class extends Migration
             $table->string('program_studi');
             $table->integer('semester');
 
-            // Akademik
-            $table->decimal('ip_semester_1', 3, 2)->nullable();
-            $table->decimal('ip_semester_2', 3, 2)->nullable();
-            $table->decimal('ip_semester_3', 3, 2)->nullable();
-            $table->decimal('ip_semester_4', 3, 2)->nullable();
-            $table->decimal('ip_semester_5', 3, 2)->nullable();
-            $table->decimal('ip_semester_6', 3, 2)->nullable();
-            $table->decimal('ip_semester_7', 3, 2)->nullable();
-            $table->decimal('ip_semester_8', 3, 2)->nullable();
-            $table->decimal('ipk', 3, 2)->nullable();
             $table->integer('jumlah_sks')->nullable();
 
             // Skripsi
@@ -36,19 +26,9 @@ return new class extends Migration
             $table->string('judul_skripsi')->nullable();
             $table->boolean('telah_seminar_proposal')->default(false);
 
-            // Prestasi dan Karya Ilmiah
-            $table->integer('jumlah_skem')->nullable();
-            $table->text('prestasi')->nullable();
-            $table->text('karya_ilmiah')->nullable();
-
-            // Kegiatan Kemahasiswaan
-            $table->text('organisasi')->nullable();
-            $table->text('kegiatan_kemahasiswaan')->nullable();
-            $table->text('kontribusi_promosi_departemen')->nullable();
 
             // Keputusan Beasiswa
             $table->enum('status_beasiswa', ['berlanjut', 'berhenti'])->default('berlanjut');
-            $table->text('catatan_kepala_departemen')->nullable();
 
             $table->timestamps();
         });
