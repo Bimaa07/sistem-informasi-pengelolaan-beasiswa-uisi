@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('beasiswa_id')->constrained('beasiswa')->onDelete('cascade');
-            $table->foreignId('periode_monitoring_id')->constrained('periode_monitorings')->onDelete('cascade');
+            $table->foreignId('periode_monitoring_id')->constrained('periode_monitoring')->onDelete('cascade');
             $table->enum('status', ['draft', 'submitted', 'reviewed_kaprodi', 'reviewed_admin', 'selesai'])->default('draft');
             $table->boolean('review_kaprodi_selesai')->default(false);
             $table->boolean('review_admin_selesai')->default(false);
