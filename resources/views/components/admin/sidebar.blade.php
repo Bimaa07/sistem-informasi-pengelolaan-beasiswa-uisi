@@ -29,38 +29,22 @@
 
             <!--begin::Menu item-->
             <div class="menu-item">
-                <a class="menu-link" href="">
+                <a class="menu-link" href="{{ route('admin.student-management') }}">
                     <span class="menu-icon"><i class="ki-outline ki-profile-user fs-2"></i></span>
                     <span class="menu-title">Manajemen Mahasiswa</span>
                 </a>
             </div>
-
             <!--begin::Menu item-->
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                <span class="menu-link">
+            <div class="menu-item">
+                <a class="menu-link" href="{{ route('admin.scholarships-management') }}">
                     <span class="menu-icon"><i class="ki-outline ki-award fs-2"></i></span>
                     <span class="menu-title">Manajemen Beasiswa</span>
-                    <span class="menu-arrow"></span>
-                </span>
-                <div class="menu-sub menu-sub-accordion">
-                    <div class="menu-item">
-                        <a class="menu-link" href="">
-                            <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                            <span class="menu-title">Daftar Beasiswa</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link" href="">
-                            <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                            <span class="menu-title">Tambah Beasiswa</span>
-                        </a>
-                    </div>
-                </div>
+                </a>
             </div>
 
             <!--begin::Menu item-->
             <div class="menu-item">
-                <a class="menu-link" href="">
+                <a class="menu-link" href="{{ route('admin.registered-scholarships') }}">
                     <span class="menu-icon"><i class="ki-outline ki-document fs-2"></i></span>
                     <span class="menu-title">Pendaftaran Beasiswa</span>
                 </a>
@@ -68,7 +52,7 @@
 
             <!--begin::Menu item-->
             <div class="menu-item">
-                <a class="menu-link" href="">
+                <a class="menu-link" href="{{ route('admin.announcement-management') }}">
                     <span class="menu-icon"><i class="ki-outline ki-notification fs-2"></i></span>
                     <span class="menu-title">Notifikasi & Pengumuman</span>
                 </a>
@@ -76,7 +60,7 @@
 
             <!--begin::Menu item-->
             <div class="menu-item">
-                <a class="menu-link" href="">
+                <a class="menu-link" href="{{ route('admin.statistics') }}">
                     <span class="menu-icon"><i class="ki-outline ki-chart-line fs-2"></i></span>
                     <span class="menu-title">Laporan & Statistik</span>
                 </a>
@@ -90,18 +74,21 @@
                 </a>
             </div>
 
-            <!--begin::Menu item-->
+            <!--begin:Menu item-->
             <div class="menu-item">
-                <form method="POST" action="{{ route('logout') }}" id="logout-form">
+                <!--begin:Menu link-->
+                <form method="POST" action="{{ route('admin.logout-admin') }}" id="logout-form">
                     @csrf
                     <a class="menu-link" href="#"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <span class="menu-icon"><i class="ki-outline ki-exit fs-2"></i></span>
-                        <span class="menu-title">Logout</span>
+                        <span class="menu-icon">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </span>
+                        <span class="menu-title">Logout admin</span>
                     </a>
                 </form>
+                <!--end:Menu link-->
             </div>
-
         </div>
     </div>
     <!--end::Sidebar menu-->

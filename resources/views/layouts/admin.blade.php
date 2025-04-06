@@ -23,7 +23,7 @@ License: For each use you must have a valid license purchased only from above li
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Beranda - Sistem Informasi Beasiswa UISI" />
-    <meta property="og:site_name" content="Metronic by Keenthemes" />
+    <meta property="og:site_name" content="Sistem Informasi Beasiswa UISI" />
     <link rel="canonical" href="http://layouts/light-sidebar.html" />
     <link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
     <!--begin::Fonts(mandatory for all pages)-->
@@ -109,7 +109,7 @@ License: For each use you must have a valid license purchased only from above li
     @vite(['resources/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js', 'resources/assets/js/widgets.bundle.js', 'resources/assets/js/custom/widgets.js', 'resources/assets/js/custom/apps/chat/chat.js', 'resources/assets/js/custom/utilities/modals/upgrade-plan.js', 'resources/assets/js/custom/utilities/modals/create-app.js', 'resources/assets/js/custom/utilities/modals/users-search.js'])
 
     <!-- Load remaining styles -->
-    @vite(['resources/assets/plugins/custom/datatables/datatables.bundle.css', 'resources/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css', 'resources/assets/plugins/global/plugins.bundle.css'])
+    @vite(['resources/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css', 'resources/assets/plugins/global/plugins.bundle.css'])
     <!--end::Custom Javascript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
     <!--end::Javascript-->

@@ -82,5 +82,27 @@ Route::prefix('admin')->group(function () {
         Route::get('/dashboard', function () {
             return view('admin.dashboard');
         })->name('admin.dashboard');
+
+        Route::get('/students-management', function () {
+            return view('admin.students-management');
+        })->name('admin.student-management');
+        Route::get('/scholarships-management', function () {
+            return view('admin.scholarships-management');
+        })->name('admin.scholarships-management');
+        Route::get('/registered-scholarships', function () {
+            return view('admin.registered-scholarships');
+        })->name('admin.registered-scholarships');
+        Route::get('/announcement-management', function () {
+            return view('admin.announcement-management');
+        })->name('admin.announcement-management');
+        Route::get('/statistics', function () {
+            return view('admin.statistics');
+        })->name('admin.statistics');
     });
+    Route::post('/logout-admin', function () {
+        Auth::logout();
+        session()->invalidate();
+        session()->regenerateToken();
+        return redirect()->route('admin.login')->with('success', 'Anda telah berhasil logout.');
+    })->name('admin.logout-admin');
 });
