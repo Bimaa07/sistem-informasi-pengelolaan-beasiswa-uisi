@@ -36,4 +36,7 @@
         <!--end::Submit button-->
     </form>
     <!--end::Form-->
+    @push('scripts')
+        <script src=" {{ Vite::asset('resources/js/auth/general.js') }}"></script>
+    @endpush
 @endsection

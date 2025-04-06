@@ -136,12 +136,15 @@ License: For each use you must have a valid license purchased only from above li
     </div>
     <!--end::Root-->
     <!--begin::Javascript-->
-    @vite(['resources/js/plugins.bundle.js', 'resources/js/scripts.bundle.js', 'resources/js/auth/general.js'])
+    <script src="{{ Vite::asset('resources/js/plugins.bundle.js') }}"></script>
+    <script src=" {{ Vite::asset('resources/js/scripts.bundle.js') }}"></script>
+
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
     <!--end::Global Javascript Bundle-->
     <!--begin::Custom Javascript(used for this page only)-->
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
+    @stack('scripts')
 </body>
 <!--end::Body-->
 
