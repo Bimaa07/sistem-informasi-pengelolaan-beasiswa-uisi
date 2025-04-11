@@ -30,7 +30,6 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
         'remember_token',
     ];
 
@@ -55,5 +54,9 @@ class User extends Authenticatable
     public function hasRole($roleName)
     {
         return $this->role->name === $roleName;
+    }
+    public function mahasiswa()
+    {
+        return $this->hasOne(Mahasiswa::class);
     }
 }

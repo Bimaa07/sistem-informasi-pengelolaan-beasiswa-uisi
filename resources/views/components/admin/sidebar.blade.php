@@ -29,14 +29,21 @@
 
             <!--begin::Menu item-->
             <div class="menu-item">
-                <a class="menu-link" href="{{ route('admin.student-management') }}">
+                <a class="menu-link" href="{{ route('admin.manajemen-mahasiswa.index') }}">
                     <span class="menu-icon"><i class="ki-outline ki-profile-user fs-2"></i></span>
                     <span class="menu-title">Manajemen Mahasiswa</span>
                 </a>
             </div>
             <!--begin::Menu item-->
             <div class="menu-item">
-                <a class="menu-link" href="{{ route('admin.scholarships-management') }}">
+                <a class="menu-link" href="{{ route('admin.periode-monitoring.index') }}">
+                    <span class="menu-icon"><i class="ki-outline ki-award fs-2"></i></span>
+                    <span class="menu-title">Manajemen Periode Monitoring</span>
+                </a>
+            </div>
+            <!--begin::Menu item-->
+            <div class="menu-item">
+                <a class="menu-link" href="{{ route('admin.beasiswa.index') }}">
                     <span class="menu-icon"><i class="ki-outline ki-award fs-2"></i></span>
                     <span class="menu-title">Manajemen Beasiswa</span>
                 </a>

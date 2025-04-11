@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('monitoring_evaluasi', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('beasiswa_id')->constrained('beasiswa')->onDelete('cascade');
-            $table->foreignId('periode_monitoring_id')->constrained('periode_monitoring')->onDelete('cascade');
+            $table->foreignId('mahasiswa_id')->constrained('mahasiswa')->onDelete('cascade');
+            $table->foreignId('periode_monitoring_evaluasi_id')->constrained('periode_monitoring_evaluasi')->onDelete('cascade');
             $table->enum('status', ['draft', 'submitted', 'reviewed_kaprodi', 'reviewed_admin', 'selesai'])->default('draft');
             $table->boolean('review_kaprodi_selesai')->default(false);
             $table->boolean('review_admin_selesai')->default(false);

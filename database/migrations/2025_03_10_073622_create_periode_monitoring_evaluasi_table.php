@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('periode_monitoring', function (Blueprint $table) {
+        Schema::create('periode_monitoring_evaluasi_beasiswa_full', function (Blueprint $table) {
             $table->id();
-            $table->string('tahun_akademik');
-            $table->date('tanggal_mulai');
-            $table->date('tanggal_selesai');
-            $table->boolean('is_active')->default(false);
+            $table->string('tahun_ajaran');
+            $table->enum('semester_akademik', ['ganjil', 'genap']);
+            $table->date('tanggal_mulai')->nullable();
+            $table->enum('status', ['dibuka', 'ditutup'])->default('dibuka');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('periode_monitorings');
+        Schema::dropIfExists('periode_monitoring_evaluasi_beasiswa_full');
     }
 };

@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('beasiswa', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->enum('tipe', ['full', 'on_going']);
             $table->text('deskripsi')->nullable();
-            $table->foreignId('periode_id')->constrained('periode_beasiswa');
-            $table->boolean('is_active')->default(true);
+            $table->enum('status', ['aktif', 'nonaktif', 'ditutup'])->default('aktif');
+            $table->date('tanggal_mulai')->nullable();
+            $table->date('tanggal_selesai')->nullable();
+            $table->string('tahun_ajaran')->nullable();
             $table->timestamps();
         });
     }

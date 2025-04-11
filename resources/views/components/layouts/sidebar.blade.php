@@ -48,6 +48,20 @@
                     </div>
                     <!--end:Menu item-->
 
+                    @if(Auth::user()->mahasiswa->hasFullScholarship())
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{ route('mahasiswa.monitoring-evaluasi.index') }}">
+                            <span class="menu-icon">
+                                <i class="ki-outline ki-award fs-2"></i>
+                            </span>
+                            <span class="menu-title">Monitoring Evaluasi</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                    @endif
+                    <!--end:Menu item-->
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
