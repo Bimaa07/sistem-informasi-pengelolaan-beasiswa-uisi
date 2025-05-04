@@ -36,5 +36,10 @@ return [
         'redirect' => env('GOOGLE_REDIRECT_URI'),
 
     ],
+    'mahasiswa_api' => [
+        'url' => env('MAHASISWA_API_URL'),
+        'key' => env('MAHASISWA_API_KEY'),
+    ],
+
 
 ];

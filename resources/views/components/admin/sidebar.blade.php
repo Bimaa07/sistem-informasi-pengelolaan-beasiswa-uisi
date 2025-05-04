@@ -27,12 +27,46 @@
                 </a>
             </div>
 
-            <!--begin::Menu item-->
+            <!--begin::Mahasiswa Management Section-->
             <div class="menu-item">
-                <a class="menu-link" href="{{ route('admin.manajemen-mahasiswa.index') }}">
-                    <span class="menu-icon"><i class="ki-outline ki-profile-user fs-2"></i></span>
-                    <span class="menu-title">Manajemen Mahasiswa</span>
-                </a>
+                <div class="menu-link custom-popover" data-bs-toggle="popover" data-bs-trigger="click"
+                    data-bs-placement="right" data-bs-html="true"
+                    data-bs-title="<h3 class='popover-custom-title'>Manajemen Data</h3>"
+                    data-bs-content='
+                        <div class="menu-sub-items p-3">
+                            <a href="{{ route('admin.users.index') }}" class="menu-sub-link d-flex align-items-center mb-3">
+                                <span class="menu-sub-icon me-3">
+                                    <i class="ki-outline ki-people fs-2"></i>
+                                </span>
+                                <span class="menu-sub-text">
+                                    <span class="d-block fw-bold mb-1">Data Pengguna</span>
+                                    <span class="text-muted fs-7">Kelola data pengguna sistem</span>
+                                </span>
+                            </a>
+                            <a href="{{ route('admin.api-mahasiswa.index') }}" class="menu-sub-link d-flex align-items-center mb-3">
+                                <span class="menu-sub-icon me-3">
+                                    <i class="fas fa-cloud-download-alt fs-2"></i>
+                                </span>
+                                <span class="menu-sub-text">
+                                    <span class="d-block fw-bold mb-1">Data API Mahasiswa</span>
+                                    <span class="text-muted fs-7">Sinkronisasi data dari API</span>
+                                </span>
+                            </a>
+                            <a href="{{ route('admin.manajemen-mahasiswa.index') }}" class="menu-sub-link d-flex align-items-center">
+                                <span class="menu-sub-icon me-3">
+                                    <i class="ki-outline ki-profile-user fs-2"></i>
+                                </span>
+                                <span class="menu-sub-text">
+                                    <span class="d-block fw-bold mb-1">Database Mahasiswa</span>
+                                    <span class="text-muted fs-7">Kelola data mahasiswa lokal</span>
+                                </span>
+                            </a>
+                        </div>
+                    '>
+                    <span class="menu-icon"><i class="ki-outline ki-profile-circle fs-2"></i></span>
+                    <span class="menu-title">Manajemen Data</span>
+                    <span class="menu-arrow"></span>
+                </div>
             </div>
             <!--begin::Menu item-->
             <div class="menu-item">
@@ -102,3 +136,31 @@
 
 </div>
 <!--end::Sidebar-->
+
+@push('scripts')
+    <script>
+        // Initialize all popovers
+        document.addEventListener('DOMContentLoaded', function() {
+            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+            var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
+                return new bootstrap.Popover(popoverTriggerEl, {
+                    template: '<div class="popover" role="tooltip">' +
+                        '<div class="popover-arrow"></div>' +
+                        '<h3 class="popover-header fw-bold p-2"></h3>' +
+                        '<div class="popover-body"></div>' +
+                        '</div>'
+                });
+            });
+
+            // Close popover when clicking outside
+            document.addEventListener('click', function(e) {
+                popoverTriggerList.forEach(function(popoverTriggerEl) {
+                    var popover = bootstrap.Popover.getInstance(popoverTriggerEl);
+                    if (popover && !popoverTriggerEl.contains(e.target)) {
+                        popover.hide();
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

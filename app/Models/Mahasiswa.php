@@ -14,9 +14,11 @@ class Mahasiswa extends Model
         'nama',
         'prodi',
         'penerima_beasiswa_full',
+        'jenis_beasiswa_full'
     ];
     protected $casts = [
         'penerima_beasiswa_full' => 'boolean',
+        'jenis_beasiswa_full' => 'string'
     ];
     public function user()
     {
@@ -28,5 +30,13 @@ class Mahasiswa extends Model
         return $this->penerima_beasiswa_full === true;
     }
 
-
+    public function getBeasiswaFullLabel()
+    {
+        return match ($this->jenis_beasiswa_full) {
+            'aperti_bumn' => 'Beasiswa Aperti BUMN',
+            'kip' => 'Beasiswa KIP',
+            'unggulan' => 'Beasiswa Unggulan',
+            default => '-'
+        };
+    }
 }

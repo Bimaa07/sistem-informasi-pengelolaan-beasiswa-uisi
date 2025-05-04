@@ -48,7 +48,7 @@
                     </div>
                     <!--end:Menu item-->
 
-                    @if(Auth::user()->mahasiswa->hasFullScholarship())
+                    {{-- @if (Auth::user()->mahasiswa->hasFullScholarship())
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
@@ -60,7 +60,7 @@
                         </a>
                         <!--end:Menu link-->
                     </div>
-                    @endif
+                    @endif --}}
                     <!--end:Menu item-->
                     <!--begin:Menu item-->
                     <div class="menu-item">

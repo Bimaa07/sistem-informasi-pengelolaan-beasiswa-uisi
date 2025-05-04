@@ -18,6 +18,12 @@ return new class extends Migration
             $table->string('nama');
             $table->string('prodi')->nullable();
             $table->boolean('penerima_beasiswa_full')->default(false);
+            $table->enum('jenis_beasiswa_full', [
+                'aperti_bumn',
+                'kip',
+                'unggulan',
+                null
+            ])->nullable();
             $table->timestamps();
         });
     }

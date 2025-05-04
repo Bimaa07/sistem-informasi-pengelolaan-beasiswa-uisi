@@ -29,6 +29,8 @@ License: For each use you must have a valid license purchased only from above li
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    @stack('styles')
     <!--end::Fonts-->
     <!--begin::Vendor Stylesheets(used for this page only)-->
     <!--end::Vendor Stylesheets-->
@@ -39,9 +41,7 @@ License: For each use you must have a valid license purchased only from above li
 
     @vite(['resources/assets/plugins/custom/datatables/datatables.bundle.css', 'resources/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css', 'resources/assets/plugins/global/plugins.bundle.css'])
     <!--end::Global Stylesheets Bundle-->
-    <script>
-        // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
-    </script>
+
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -112,6 +112,7 @@ License: For each use you must have a valid license purchased only from above li
     @vite(['resources/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css', 'resources/assets/plugins/global/plugins.bundle.css'])
     <!--end::Custom Javascript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!--end::Javascript-->
     @stack('scripts')
 </body>
