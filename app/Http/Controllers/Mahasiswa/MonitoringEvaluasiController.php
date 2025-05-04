@@ -27,7 +27,7 @@ class MonitoringEvaluasiController extends Controller
 
             $mahasiswa = Auth::user()->mahasiswa;
             $monitoringEvaluasi = MonitoringEvaluasi::where('mahasiswa_id', $mahasiswa->id)
-                ->where('periode_monitoring_id', $activePeriod->id)
+                ->where('periode_monitoring_evaluasi_id', $activePeriod->id)
                 ->first();
 
             return view('mahasiswa.monitoring-evaluasi.index', compact('activePeriod', 'monitoringEvaluasi'));

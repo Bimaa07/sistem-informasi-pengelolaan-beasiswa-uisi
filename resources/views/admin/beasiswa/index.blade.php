@@ -17,9 +17,6 @@
                 <a href="{{ route('admin.beasiswa.create') }}" class="btn btn-primary">
                     <i class="fas fa-plus"></i> Tambah Beasiswa
                 </a>
-                <button class="btn btn-success">
-                    <i class="fas fa-file-export"></i> Export Data
-                </button>
             </div>
         </div>
 

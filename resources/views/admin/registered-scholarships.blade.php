@@ -62,9 +62,6 @@
                 <button class="btn btn-primary">
                     <i class="fas fa-sync"></i> Refresh Data
                 </button>
-                <button class="btn btn-success">
-                    <i class="fas fa-file-export"></i> Export Data
-                </button>
             </div>
         </div>
 
