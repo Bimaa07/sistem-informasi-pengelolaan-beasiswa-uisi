@@ -13,12 +13,8 @@ return new class extends Migration
     {
         Schema::create('beasiswa', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
+            $table->enum('nama', ['bpel', 'aktivis', 'bpa'])->unique();
             $table->text('deskripsi')->nullable();
-            $table->enum('status', ['aktif', 'nonaktif', 'ditutup'])->default('aktif');
-            $table->date('tanggal_mulai')->nullable();
-            $table->date('tanggal_selesai')->nullable();
-            $table->string('tahun_ajaran')->nullable();
             $table->timestamps();
         });
     }

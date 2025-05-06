@@ -79,7 +79,13 @@
             <div class="menu-item">
                 <a class="menu-link" href="{{ route('admin.beasiswa.index') }}">
                     <span class="menu-icon"><i class="ki-outline ki-award fs-2"></i></span>
-                    <span class="menu-title">Manajemen Beasiswa</span>
+                    <span class="menu-title">Manajemen Beasiswa Ongoing</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a class="menu-link" href="{{ route('admin.beasiswa-ongoing.index') }}">
+                    <span class="menu-icon"><i class="ki-outline ki-award fs-2"></i></span>
+                    <span class="menu-title">Buat Pendaftaran Beasiswa Ongoing </span>
                 </a>
             </div>
 

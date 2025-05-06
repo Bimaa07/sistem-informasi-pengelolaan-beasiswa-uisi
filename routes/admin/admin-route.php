@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ApiMahasiswaController;
+use App\Http\Controllers\Admin\BeasiswaController;
 use App\Http\Controllers\Admin\ManagementMahasiswaController;
 use App\Http\Controllers\Admin\ManajemenBeasiswaController;
 use App\Http\Controllers\Admin\ManajemenPeriodeMonitoringController;
@@ -48,7 +49,7 @@ Route::prefix('admin')->group(function () {
         )
             ->name('admin.manajemen-mahasiswa.update-scholarship-status');
 
-        Route::resource('beasiswa', ManajemenBeasiswaController::class)->names([
+        Route::resource('beasiswa', BeasiswaController::class)->names([
             'index' => 'admin.beasiswa.index',
             'create' => 'admin.beasiswa.create',
             'store' => 'admin.beasiswa.store',
