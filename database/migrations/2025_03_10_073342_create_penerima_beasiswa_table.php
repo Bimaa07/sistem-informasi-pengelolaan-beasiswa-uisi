@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('penerima_beasiswa_full', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->enum('status', ['diproses', 'diterima', 'ditolak'])->default('pending');
+            $table->enum('status', ['diproses', 'diterima', 'ditolak'])->default('diproses');
             $table->date('tanggal_submit')->nullable();
             $table->date('valid_sampai')->nullable();
             $table->timestamps();

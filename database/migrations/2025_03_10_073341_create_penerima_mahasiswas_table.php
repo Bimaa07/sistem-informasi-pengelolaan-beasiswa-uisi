@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('beasiswa_id')->constrained('beasiswa')->onDelete('cascade');
-            $table->enum('status', ['diproses', 'diterima', 'ditolak'])->default('pending');
+            $table->enum('status', ['diproses', 'diterima', 'ditolak'])->default('diproses');
             $table->date('tanggal_submit')->nullable();
             $table->date('valid_sampai')->nullable();
             $table->timestamps();
