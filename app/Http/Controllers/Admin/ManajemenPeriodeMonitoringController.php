@@ -71,23 +71,22 @@ class ManajemenPeriodeMonitoringController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified monitoring period
-     */
     public function edit($id)
     {
         try {
             $period = PeriodeMonitoring::findOrFail($id);
+            // Use raw values for form
+            $period->status = $period->raw_status;
+            $period->semester_akademik = $period->raw_semester_akademik;
+
             return view('admin.periode-monitoring.edit', compact('period'));
         } catch (\Exception $e) {
-            return redirect()->back()
+            return redirect()
+                ->route('admin.periode-monitoring.index')
                 ->with('error', 'Periode monitoring tidak ditemukan');
         }
     }
 
-    /**
-     * Update the specified monitoring period
-     */
     public function update(Request $request, $id)
     {
         try {
@@ -99,7 +98,8 @@ class ManajemenPeriodeMonitoringController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return redirect()->back()
+                return redirect()
+                    ->back()
                     ->withErrors($validator)
                     ->withInput();
             }
@@ -116,15 +116,18 @@ class ManajemenPeriodeMonitoringController extends Controller
 
             DB::commit();
 
-            return redirect()->route('admin.periode-monitoring.index')
+            return redirect()
+                ->route('admin.periode-monitoring.index')
                 ->with('success', 'Periode monitoring berhasil diperbarui');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()
+            return redirect()
+                ->back()
                 ->with('error', 'Terjadi kesalahan dalam memperbarui periode monitoring')
                 ->withInput();
         }
     }
+
 
     /**
      * Remove the specified monitoring period

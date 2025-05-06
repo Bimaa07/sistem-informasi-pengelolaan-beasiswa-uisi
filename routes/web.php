@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\BeasiswaController;
+use App\Http\Controllers\Admin\ManajemenBeasiswaOngoingController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Mahasiswa\MonitoringEvaluasiController;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +35,24 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/monitoring-evaluasi/{id}', [MonitoringEvaluasiController::class, 'show'])
         ->name('mahasiswa.monitoring-evaluasi.show');
 });
+
+Route::resource('beasiswa', BeasiswaController::class)->names([
+    'index' => 'admin.beasiswa.index',
+    'create' => 'admin.beasiswa.create',
+    'store' => 'admin.beasiswa.store',
+    'edit' => 'admin.beasiswa.edit',
+    'update' => 'admin.beasiswa.update',
+    'destroy' => 'admin.beasiswa.destroy',
+]);
+
+Route::resource('beasiswa-ongoing', ManajemenBeasiswaOngoingController::class)->names([
+    'index' => 'admin.beasiswa-ongoing.index',
+    'create' => 'admin.beasiswa-ongoing.create',
+    'store' => 'admin.beasiswa-ongoing.store',
+    'edit' => 'admin.beasiswa-ongoing.edit',
+    'update' => 'admin.beasiswa-ongoing.update',
+    'destroy' => 'admin.beasiswa-ongoing.destroy',
+]);
 
 Route::get('available-scholarships', function () {
     return view('available-scholarship');

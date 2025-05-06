@@ -24,4 +24,8 @@ class PeriodeMonitoring extends Model
         return $value === 'ganjil' ? 'Ganjil' : 'Genap';
     }
 
+    public function getRawSemesterAkademikAttribute()
+    {
+        return $this->attributes['semester_akademik'];
+    }
 }
