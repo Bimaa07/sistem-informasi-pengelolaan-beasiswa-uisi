@@ -15,16 +15,19 @@ class RoleSeeder extends Seeder
         $roles = [
             [
                 'name' => 'student',
+                'name_idn' => 'Mahasiswa',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => 'admin',
+                'name_idn' => 'Admin',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'name' => 'head_of_study_program',
+                'name_idn' => 'Kepala Program Studi',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

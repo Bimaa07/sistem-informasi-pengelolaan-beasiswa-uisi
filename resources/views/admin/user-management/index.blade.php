@@ -33,6 +33,7 @@
                             <th>Nama</th>
                             <th>Email</th>
                             <th>Role</th>
+                            <th>Program Studi</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -42,10 +43,11 @@
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
-                                    <span class="badge bg-{{ $user->role ? 'info' : 'secondary' }}">
-                                        {{ $user->role ? $user->role->name : 'No Role' }}
+                                    <span>
+                                        {{ $user->role ? $user->role->name_idn : 'No Role' }}
                                     </span>
                                 </td>
+                                <td>{{ $user->programStudi ? $user->programStudi->nama : '-' }}</td>
                                 <td>
                                     <button class="btn btn-sm btn-warning edit-user" data-user="{{ $user->id }}"
                                         data-bs-toggle="modal" data-bs-target="#editUserModal">
@@ -91,14 +93,19 @@
                             <input type="email" name="email" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" required>
+                            <label class="form-label">Program Studi</label>
+                            <select name="program_studi_id" class="form-select">
+                                <option value="">Pilih Program Studi</option>
+                                @foreach ($programStudi as $prodi)
+                                    <option value="{{ $prodi->id }}">{{ $prodi->nama }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Role</label>
                             <select name="role_id" class="form-select" required>
                                 @foreach ($roles as $role)
-                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                    <option value="{{ $role->id }}">{{ $role->name_idn }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -134,14 +141,19 @@
                             <input type="email" name="email" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Password (kosongkan jika tidak diubah)</label>
-                            <input type="password" name="password" class="form-control">
+                            <label class="form-label">Program Studi</label>
+                            <select name="program_studi_id" class="form-select">
+                                <option value="">Pilih Program Studi</option>
+                                @foreach ($programStudi as $prodi)
+                                    <option value="{{ $prodi->id }}">{{ $prodi->nama }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Role</label>
                             <select name="role_id" class="form-select" required>
                                 @foreach ($roles as $role)
-                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                    <option value="{{ $role->id }}">{{ $role->name_idn }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -169,6 +181,7 @@
             form.find('[name=name]').val(userData.name);
             form.find('[name=email]').val(userData.email);
             form.find('[name=role_id]').val(userData.role_id);
+            form.find('[name=program_studi_id]').val(userData.program_studi_id);
         });
 
         // Handle Delete User

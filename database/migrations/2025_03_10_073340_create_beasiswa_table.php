@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('beasiswa', function (Blueprint $table) {
             $table->id();
-            $table->enum('nama', ['bpel', 'aktivis', 'bpa'])->unique();
+            $table->enum('jenis', ['full', 'ongoing']);
+            $table->string('nama')->unique();
             $table->text('deskripsi')->nullable();
             $table->timestamps();
         });

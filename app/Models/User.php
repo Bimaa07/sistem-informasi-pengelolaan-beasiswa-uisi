@@ -19,10 +19,10 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
         'google_id',
         'avatar',
-        'role_id'
+        'role_id',
+        'program_studi_id'
     ];
 
     /**
@@ -59,5 +59,9 @@ class User extends Authenticatable
     public function mahasiswa()
     {
         return $this->hasOne(Mahasiswa::class);
+    }
+    public function programStudi()
+    {
+        return $this->belongsTo(ProgramStudi::class);
     }
 }

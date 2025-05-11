@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ProgramStudi;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ class UserManagementController extends Controller
 {
     public function index(Request $request)
     {
-        $query = User::with('role');
+        $query = User::with(['role', 'programStudi']);
 
         if ($request->has('search')) {
             $search = $request->search;
@@ -26,8 +27,9 @@ class UserManagementController extends Controller
 
         $users = $query->paginate(10);
         $roles = Role::all();
+        $programStudi = ProgramStudi::all();
 
-        return view('admin.user-management.index', compact('users', 'roles'));
+        return view('admin.user-management.index', compact('users', 'roles', 'programStudi'));
     }
 
     public function store(Request $request)
@@ -35,42 +37,36 @@ class UserManagementController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', Password::defaults()],
             'role_id' => ['required', 'exists:roles,id'],
+            'program_studi_id' => ['nullable', 'exists:program_studi,id'],
         ]);
 
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
             'role_id' => $validated['role_id'],
+            'program_studi_id' => $validated['program_studi_id'],
         ]);
 
         return redirect()
             ->route('admin.users.index')
             ->with('success', 'User berhasil ditambahkan.');
     }
-
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
             'role_id' => ['required', 'exists:roles,id'],
-            'password' => ['nullable', Password::defaults()],
+            'program_studi_id' => ['nullable', 'exists:program_studi,id'],
         ]);
 
-        $updateData = [
+        $user->update([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'role_id' => $validated['role_id'],
-        ];
-
-        if ($request->filled('password')) {
-            $updateData['password'] = Hash::make($validated['password']);
-        }
-
-        $user->update($updateData);
+            'program_studi_id' => $validated['program_studi_id'],
+        ]);
 
         return redirect()
             ->route('admin.users.index')

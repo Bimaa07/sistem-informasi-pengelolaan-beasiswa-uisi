@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('penerima_beasiswa_full', function (Blueprint $table) {
+        Schema::create('mahasiswa_beasiswa', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->enum('status', ['diproses', 'diterima', 'ditolak'])->default('diproses');
-            $table->date('tanggal_submit')->nullable();
-            $table->date('valid_sampai')->nullable();
+
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('penerima_beasiswa');
+        Schema::dropIfExists('mahasiswa_beasiswa');
     }
 };

@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('program_studi', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('name_idn')->unique();
+            $table->string('nama');
             $table->timestamps();
         });
-
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('role_id')->nullable()->constrained('roles')->onDelete('set null');
+            $table->foreignId('program_studi_id')
+                ->nullable()
+                ->constrained('program_studi')
+                ->onDelete('set null');
         });
     }
 
@@ -28,13 +29,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Drop foreign key first, then column
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['role_id']);
-            $table->dropColumn('role_id');
+            $table->dropForeign(['program_studi_id']);
+            $table->dropColumn('program_studi_id');
         });
-
-        // Drop roles table
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('program_studi');
     }
 };
