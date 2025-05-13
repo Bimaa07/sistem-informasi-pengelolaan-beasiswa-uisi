@@ -111,9 +111,10 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <button class="btn btn-sm btn-info">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
+                                        <a href="{{ route('admin.manajemen-beasiswa-mahasiswa.index', ['search' => $mhs->nim]) }}"
+                                            class="btn btn-sm btn-info">
+                                            Atur Beasiswa
+                                        </a>
                                     </td>
                                 </tr>
                             @empty

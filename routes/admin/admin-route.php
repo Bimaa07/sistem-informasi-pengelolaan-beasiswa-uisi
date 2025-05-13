@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ApiMahasiswaController;
 use App\Http\Controllers\Admin\BeasiswaController;
 use App\Http\Controllers\Admin\ManagementMahasiswaController;
 use App\Http\Controllers\Admin\ManajemenBeasiswaController;
+use App\Http\Controllers\Admin\ManajemenBeasiswaMahasiswaController;
 use App\Http\Controllers\Admin\ManajemenPeriodeMonitoringController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Auth\AdminAuthenticationController;
@@ -47,6 +48,12 @@ Route::prefix('admin')->group(function () {
             ->name('admin.manajemen-mahasiswa.import');
         Route::post('/manajemen-mahasiswa/store', [ManagementMahasiswaController::class, 'store'])
             ->name('admin.manajemen-mahasiswa.store');
+
+        Route::get('/manajemen-beasiswa-mahasiswa', [ManajemenBeasiswaMahasiswaController::class, 'index'])
+            ->name('admin.manajemen-beasiswa-mahasiswa.index');
+
+        Route::post('/manajemen-beasiswa-mahasiswa/store', [ManajemenBeasiswaMahasiswaController::class, 'store'])
+            ->name('admin.manajemen-beasiswa-mahasiswa.store');
 
         Route::resource('beasiswa', BeasiswaController::class)->names([
             'index' => 'admin.beasiswa.index',

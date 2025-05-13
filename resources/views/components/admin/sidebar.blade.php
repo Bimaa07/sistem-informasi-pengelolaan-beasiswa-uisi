@@ -40,8 +40,8 @@
             </div>
 
             <div class="menu-item">
-                <a class="menu-link {{ Route::is('admin.manajemen-mahasiswa.*') ? 'active' : '' }}"
-                    href="{{ route('admin.manajemen-mahasiswa.index') }}">
+                <a class="menu-link {{ Route::is('admin.manajemen-beasiswa-mahasiswa.*') ? 'active' : '' }}"
+                    href="{{ route('admin.manajemen-beasiswa-mahasiswa.index') }}">
                     <span class="menu-icon"><i class="ki-outline ki-profile-user fs-2"></i></span>
                     <span class="menu-title">Database Mahasiswa</span>
                 </a>
