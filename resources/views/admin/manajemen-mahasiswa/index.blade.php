@@ -92,7 +92,6 @@
                                 <th>Nama</th>
                                 <th>Program Studi</th>
                                 <th>Email</th>
-                                <th>Status User</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -103,13 +102,6 @@
                                     <td>{{ $mhs->nama }}</td>
                                     <td>{{ $mhs->program_studi }}</td>
                                     <td>{{ $mhs->email }}</td>
-                                    <td>
-                                        @if ($mhs->user_id)
-                                            <span class="badge bg-success">Aktif</span>
-                                        @else
-                                            <span class="badge bg-warning">Belum Ada Akun</span>
-                                        @endif
-                                    </td>
                                     <td>
                                         <a href="{{ route('admin.manajemen-beasiswa-mahasiswa.index', ['search' => $mhs->nim]) }}"
                                             class="btn btn-sm btn-info">

@@ -35,7 +35,6 @@
                                         <th>NIM</th>
                                         <th>Nama</th>
                                         <th>Program Studi</th>
-                                        <th>Status User</th>
                                         <th>Beasiswa</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -46,13 +45,6 @@
                                             <td>{{ $mhs->nim }}</td>
                                             <td>{{ $mhs->nama }}</td>
                                             <td>{{ $mhs->program_studi }}</td>
-                                            <td>
-                                                @if ($mhs->user_id)
-                                                    <div class="badge badge-light-success">Aktif</div>
-                                                @else
-                                                    <div class="badge badge-light-warning">Belum Ada Akun</div>
-                                                @endif
-                                            </td>
                                             <td>
                                                 <button type="button" class="btn btn-sm btn-light-primary btn-set-beasiswa"
                                                     data-mahasiswa-id="{{ $mhs->id }}"
