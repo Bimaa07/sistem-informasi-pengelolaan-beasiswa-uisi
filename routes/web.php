@@ -45,14 +45,7 @@ Route::resource('beasiswa', BeasiswaController::class)->names([
     'destroy' => 'admin.beasiswa.destroy',
 ]);
 
-Route::resource('beasiswa-ongoing', ManajemenBeasiswaOngoingController::class)->names([
-    'index' => 'admin.beasiswa-ongoing.index',
-    'create' => 'admin.beasiswa-ongoing.create',
-    'store' => 'admin.beasiswa-ongoing.store',
-    'edit' => 'admin.beasiswa-ongoing.edit',
-    'update' => 'admin.beasiswa-ongoing.update',
-    'destroy' => 'admin.beasiswa-ongoing.destroy',
-]);
+
 
 Route::get('available-scholarships', function () {
     return view('available-scholarship');

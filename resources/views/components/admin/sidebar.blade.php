@@ -88,29 +88,6 @@
             <!--begin::Menu section-->
             <div class="menu-item pt-5">
                 <div class="menu-content">
-                    <span class="menu-heading fw-bold text-uppercase fs-7">Sistem</span>
-                </div>
-            </div>
-
-            <div class="menu-item">
-                <a class="menu-link {{ Route::is('admin.announcement-management') ? 'active' : '' }}"
-                    href="{{ route('admin.announcement-management') }}">
-                    <span class="menu-icon"><i class="ki-outline ki-notification fs-2"></i></span>
-                    <span class="menu-title">Notifikasi & Pengumuman</span>
-                </a>
-            </div>
-
-            <div class="menu-item">
-                <a class="menu-link {{ Route::is('admin.statistics') ? 'active' : '' }}"
-                    href="{{ route('admin.statistics') }}">
-                    <span class="menu-icon"><i class="ki-outline ki-chart-line fs-2"></i></span>
-                    <span class="menu-title">Laporan & Statistik</span>
-                </a>
-            </div>
-
-            <!--begin::Menu section-->
-            <div class="menu-item pt-5">
-                <div class="menu-content">
                     <span class="menu-heading fw-bold text-uppercase fs-7">Akun</span>
                 </div>
             </div>
