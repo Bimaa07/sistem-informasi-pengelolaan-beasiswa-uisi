@@ -60,12 +60,7 @@ class ProgramStudiSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'nama' => 'Teknologi Industri Pertanian',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-
+           
         ];
 
         ProgramStudi::insert($programStudi);
