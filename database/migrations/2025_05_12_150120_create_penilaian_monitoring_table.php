@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('penilaian_monitoring', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('monitoring_id')->constrained('monitoring_evaluasi')->onDelete('cascade');
-            $table->foreignId('kepala_prodi_id')->constrained('users')->onDelete('cascade');
-            $table->integer('rating')->default(1); // 1-5 Bintang
+            $table->foreignId('monitoring_evaluasi_id')->constrained('monitoring_evaluasi')->onDelete('cascade');
+            $table->foreignId('penilai_id')->constrained('users')->onDelete('cascade');
+            $table->enum('role_penilai', ['kaprodi', 'admin']);
+            $table->integer('rating')->default(1); // 1-5
             $table->text('catatan')->nullable();
             $table->timestamps();
         });

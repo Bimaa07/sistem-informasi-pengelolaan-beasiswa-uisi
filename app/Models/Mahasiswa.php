@@ -7,36 +7,33 @@ use Illuminate\Database\Eloquent\Model;
 class Mahasiswa extends Model
 {
     protected $table = 'mahasiswa';
-
     protected $fillable = [
         'user_id',
         'nim',
         'nama',
-        'prodi',
-        'penerima_beasiswa_full',
-        'jenis_beasiswa_full'
+        'program_studi',
+        'mahasiswa_transfer',
+        'email',
+        'tahun_masuk'
     ];
     protected $casts = [
-        'penerima_beasiswa_full' => 'boolean',
-        'jenis_beasiswa_full' => 'string'
+        'mahasiswa_transfer' => 'boolean',
+        'tahun_masuk' => 'string',
+    ];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
     ];
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
-    public function hasFullScholarship()
+    public function getMahasiswaByNim($nim)
     {
-        return $this->penerima_beasiswa_full === true;
+        return $this->where('nim', $nim)->first();
     }
-
-    public function getBeasiswaFullLabel()
+    public function getMahasiswaByEmail($email)
     {
-        return match ($this->jenis_beasiswa_full) {
-            'aperti_bumn' => 'Beasiswa Aperti BUMN',
-            'kip' => 'Beasiswa KIP',
-            'unggulan' => 'Beasiswa Unggulan',
-            default => '-'
-        };
+        return $this->where('email', $email)->first();
     }
 }

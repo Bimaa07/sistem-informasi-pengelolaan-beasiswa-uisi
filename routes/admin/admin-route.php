@@ -18,7 +18,7 @@ Route::prefix('admin')->group(function () {
         ->name('admin.login.submit');
     Route::post('/logout', [AdminAuthenticationController::class, 'logout'])
         ->name('admin.logout');
-    Route::get('/api-mahasiswa', [ApiMahasiswaController::class, 'index'])
+    Route::get('/api-mahasiswa', [ManagementMahasiswaController::class, 'index'])
         ->name('admin.api-mahasiswa.index');
 
     // Protected Admin Routes
@@ -40,14 +40,13 @@ Route::prefix('admin')->group(function () {
         })->name('admin.dashboard');
 
 
-        Route::get('/manajemen-mahasiswa', [ManagementMahasiswaController::class, 'index'])->name('admin.manajemen-mahasiswa.index');
+
+        Route::get('/manajemen-mahasiswa', [ManagementMahasiswaController::class, 'index'])
+            ->name('admin.manajemen-mahasiswa.index');
         Route::post('/manajemen-mahasiswa/import', [ManagementMahasiswaController::class, 'import'])
             ->name('admin.manajemen-mahasiswa.import');
-        Route::patch(
-            '/manajemen-mahasiswa/{mahasiswa}/scholarship-status',
-            [ManagementMahasiswaController::class, 'updateScholarshipStatus']
-        )
-            ->name('admin.manajemen-mahasiswa.update-scholarship-status');
+        Route::post('/manajemen-mahasiswa/store', [ManagementMahasiswaController::class, 'store'])
+            ->name('admin.manajemen-mahasiswa.store');
 
         Route::resource('beasiswa', BeasiswaController::class)->names([
             'index' => 'admin.beasiswa.index',

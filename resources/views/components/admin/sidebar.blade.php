@@ -33,7 +33,7 @@
 
             <div class="menu-item">
                 <a class="menu-link {{ Route::is('admin.api-mahasiswa.*') ? 'active' : '' }}"
-                    href="{{ route('admin.api-mahasiswa.index') }}">
+                    href="{{ route('admin.manajemen-mahasiswa.index') }}">
                     <span class="menu-icon"><i class="ki-outline ki-cloud-download fs-2"></i></span>
                     <span class="menu-title">Data API Mahasiswa</span>
                 </a>

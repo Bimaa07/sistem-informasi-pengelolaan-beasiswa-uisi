@@ -6,26 +6,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class PeriodeMonitoring extends Model
 {
-    protected $table = 'periode_monitoring_evaluasi_beasiswa_full';
-
+    protected $table = 'periode_monitoring';
     protected $fillable = [
         'tahun_ajaran',
-        'semester_akademik',
+        'semester',
         'tanggal_mulai',
+        'tanggal_selesai',
         'status',
     ];
 
-    public function getStatusAttribute($value)
+    public function penerimaBeasiswa()
     {
-        return $value === 'dibuka' ? 'Dibuka' : 'Ditutup';
-    }
-    public function getSemesterAkademikAttribute($value)
-    {
-        return $value === 'ganjil' ? 'Ganjil' : 'Genap';
+        return $this->hasMany(PenerimaBeasiswa::class);
     }
 
-    public function getRawSemesterAkademikAttribute()
+    public function monitoringEvaluasi()
     {
-        return $this->attributes['semester_akademik'];
+        return $this->hasMany(MonitoringEvaluasi::class);
+    }
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'aktif');
+    }
+    public function scopeInactive($query)
+    {
+        return $query->where('status', 'nonaktif');
     }
 }

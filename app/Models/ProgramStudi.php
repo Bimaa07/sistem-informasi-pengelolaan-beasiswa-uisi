@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ProgramStudi extends Model
 {
@@ -13,8 +12,12 @@ class ProgramStudi extends Model
         'nama',
     ];
 
-    public function users(): HasMany
+    public function users()
     {
         return $this->hasMany(User::class);
+    }
+    public function mahasiswa()
+    {
+        return $this->hasMany(Mahasiswa::class);
     }
 }

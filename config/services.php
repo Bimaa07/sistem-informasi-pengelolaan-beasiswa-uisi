@@ -39,6 +39,7 @@ return [
     'mahasiswa_api' => [
         'url' => env('MAHASISWA_API_URL'),
         'key' => env('MAHASISWA_API_KEY'),
+        'token' => env('MAHASISWA_API_TOKEN'),
     ],
 
 

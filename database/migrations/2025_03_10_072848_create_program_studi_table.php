@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('beasiswa', function (Blueprint $table) {
+        Schema::create('program_studi', function (Blueprint $table) {
             $table->id();
-            $table->enum('jenis', ['full', 'ongoing']);
-            $table->string('nama')->unique();
-            $table->text('deskripsi')->nullable();
+            $table->string('nama');
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('beasiswa');
+        Schema::dropIfExists('program_studi');
     }
 };

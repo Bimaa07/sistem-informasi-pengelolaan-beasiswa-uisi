@@ -1,48 +1,79 @@
 @extends('layouts.admin')
 
-@push('styles')
-    <style>
-        .form-switch {
-            padding-left: 2.5em;
-        }
-
-        .form-check-input {
-            cursor: pointer;
-        }
-
-        .scholarship-toggle:checked {
-            background-color: #198754;
-            border-color: #198754;
-        }
-    </style>
-@endpush
 @section('content')
     <div class="container-fluid px-4">
-        <!-- Header Section -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h1 class="mt-4">Manajemen Mahasiswa</h1>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Manajemen Mahasiswa</li>
-                    </ol>
-                </nav>
+            <h1 class="mt-4">Database Mahasiswa</h1>
+        </div>
+
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
+        <!-- Search and Import Section -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Cari Data Mahasiswa</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="searchNim" placeholder="Masukkan NIM"
+                                pattern="\d{10}">
+                            <button class="btn btn-primary" type="button" id="searchButton">
+                                <i class="fas fa-search me-1"></i> Cari
+                            </button>
+                        </div>
+                        <small class="form-text text-muted">Format: 10 digit angka (contoh: 3012110009)</small>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Search & Filter Section -->
-        <div class="card mb-4">
+        <!-- Preview Card -->
+        <div class="card mb-4 d-none" id="previewCard">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Preview Data Mahasiswa</h5>
+            </div>
             <div class="card-body">
-                <form action="{{ route('admin.manajemen-mahasiswa.index') }}" method="GET">
+                <form id="importForm">
                     <div class="row g-3">
-                        <div class="col-md-4">
-                            <input type="text" name="search" class="form-control" placeholder="Cari NIM/Nama/Prodi..."
-                                value="{{ request('search') }}">
+                        <div class="col-md-6">
+                            <label class="form-label">NIM</label>
+                            <input type="text" class="form-control" id="nim" name="nim" readonly>
                         </div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-search"></i> Cari
+                        <div class="col-md-6">
+                            <label class="form-label">Nama</label>
+                            <input type="text" class="form-control" id="nama" name="nama" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Program Studi</label>
+                            <input type="text" class="form-control" id="program_studi" name="program_studi" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Tahun Masuk</label>
+                            <input type="text" class="form-control" id="tahun_masuk" name="tahun_masuk" readonly>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="create_user" name="create_user" checked>
+                                <label class="form-check-label" for="create_user">
+                                    Buat akun user untuk mahasiswa ini
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save me-1"></i> Simpan ke Database
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="cancelButton">
+                                <i class="fas fa-times me-1"></i> Batal
                             </button>
                         </div>
                     </div>
@@ -50,117 +81,50 @@
             </div>
         </div>
 
-        <!-- Students Table -->
-        <div class="card mb-4">
+        <!-- Data Table -->
+        <div class="card">
             <div class="card-body">
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>NIM</th>
-                            <th>Nama</th>
-                            <th>Program Studi</th>
-                            <th>Email</th>
-                            <th>Status Beasiswa Full</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($mahasiswas as $index => $mahasiswa)
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
                             <tr>
-                                <td>{{ $mahasiswas->firstItem() + $index }}</td>
-                                <td>{{ $mahasiswa->nim }}</td>
-                                <td>{{ $mahasiswa->nama }}</td>
-                                <td>{{ $mahasiswa->prodi }}</td>
-                                <td>{{ $mahasiswa->user->email }}</td>
-                                <td>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input scholarship-toggle" type="checkbox"
-                                            id="scholarship-{{ $mahasiswa->id }}" data-id="{{ $mahasiswa->id }}"
-                                            {{ $mahasiswa->penerima_beasiswa_full ? 'checked' : '' }}>
-                                        <select class="form-select scholarship-type" data-id="{{ $mahasiswa->id }}"
-                                            {{ !$mahasiswa->penerima_beasiswa_full ? 'disabled' : '' }}>
-                                            <option value="">Pilih Jenis Beasiswa</option>
-                                            <option value="aperti_bumn"
-                                                {{ $mahasiswa->jenis_beasiswa_full === 'aperti_bumn' ? 'selected' : '' }}>
-                                                Beasiswa Aperti BUMN
-                                            </option>
-                                            <option value="kip"
-                                                {{ $mahasiswa->jenis_beasiswa_full === 'kip' ? 'selected' : '' }}>
-                                                Beasiswa KIP
-                                            </option>
-                                            <option value="unggulan"
-                                                {{ $mahasiswa->jenis_beasiswa_full === 'unggulan' ? 'selected' : '' }}>
-                                                Beasiswa Unggulan
-                                            </option>
-                                        </select>
-                                        <label class="form-check-label" for="scholarship-{{ $mahasiswa->id }}">
-                                            <span
-                                                class="badge bg-{{ $mahasiswa->penerima_beasiswa_full ? 'success' : 'secondary' }}">
-                                                {{ $mahasiswa->getBeasiswaFullLabel() }}
-                                            </span>
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <button class="btn btn-sm btn-info" data-bs-toggle="modal"
-                                        data-bs-target="#kt_modal_detail" data-mahasiswa-id="{{ $mahasiswa->id }}">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-warning" onclick="editMahasiswa({{ $mahasiswa->id }})">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger" onclick="deleteMahasiswa({{ $mahasiswa->id }})">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
+                                <th>NIM</th>
+                                <th>Nama</th>
+                                <th>Program Studi</th>
+                                <th>Email</th>
+                                <th>Status User</th>
+                                <th>Aksi</th>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="7" class="text-center">Tidak ada data mahasiswa</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-
-                <!-- Pagination -->
-                <div class="d-flex justify-content-end">
-                    {{ $mahasiswas->links() }}
+                        </thead>
+                        <tbody>
+                            @forelse($mahasiswa as $mhs)
+                                <tr>
+                                    <td>{{ $mhs->nim }}</td>
+                                    <td>{{ $mhs->nama }}</td>
+                                    <td>{{ $mhs->program_studi }}</td>
+                                    <td>{{ $mhs->email }}</td>
+                                    <td>
+                                        @if ($mhs->user_id)
+                                            <span class="badge bg-success">Aktif</span>
+                                        @else
+                                            <span class="badge bg-warning">Belum Ada Akun</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center">Tidak ada data</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Detail Modal -->
-    <div class="modal fade" id="kt_modal_detail" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered mw-650px">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Detail Mahasiswa</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="text-center mb-4">
-                        <img id="mahasiswa-avatar" src="" alt="Avatar" class="rounded-circle"
-                            style="width: 100px; height: 100px;">
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-4 fw-bold">NIM</div>
-                        <div class="col-md-8" id="detail-nim"></div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-4 fw-bold">Nama</div>
-                        <div class="col-md-8" id="detail-nama"></div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-4 fw-bold">Program Studi</div>
-                        <div class="col-md-8" id="detail-prodi"></div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-4 fw-bold">Email</div>
-                        <div class="col-md-8" id="detail-email"></div>
-                    </div>
-                </div>
+                {{ $mahasiswa->links() }}
             </div>
         </div>
     </div>
@@ -168,100 +132,93 @@
 
 @push('scripts')
     <script>
-        function editMahasiswa(id) {
-            alert('Edit mahasiswa dengan ID: ' + id);
-        }
+        $(document).ready(function() {
+            const searchButton = $('#searchButton');
+            const searchNim = $('#searchNim');
+            const previewCard = $('#previewCard');
+            const importForm = $('#importForm');
+            const cancelButton = $('#cancelButton');
 
-        function deleteMahasiswa(id) {
-            if (confirm('Apakah Anda yakin ingin menghapus data mahasiswa ini?')) {
-                alert('Menghapus mahasiswa dengan ID: ' + id);
-            }
-        }
-
-        // Handle modal detail
-        $('#kt_modal_detail').on('show.bs.modal', function(event) {
-            const button = $(event.relatedTarget);
-            const mahasiswaId = button.data('mahasiswa-id');
-
-            // Simulate loading data (replace with actual AJAX call)
-            const mahasiswa = {
-                nim: 'Loading...',
-                nama: 'Loading...',
-                prodi: 'Loading...',
-                email: 'Loading...',
-                avatar: 'path/to/default/avatar.jpg'
-            };
-
-            $('#detail-nim').text(mahasiswa.nim);
-            $('#detail-nama').text(mahasiswa.nama);
-            $('#detail-prodi').text(mahasiswa.prodi);
-            $('#detail-email').text(mahasiswa.email);
-            $('#mahasiswa-avatar').attr('src', mahasiswa.avatar);
-        });
-
-        $('.scholarship-toggle').on('change', function() {
-            const id = $(this).data('id');
-            const isChecked = $(this).prop('checked');
-            const select = $(this).siblings('.scholarship-type');
-            const badge = $(this).siblings('label').find('.badge');
-
-            // Enable/disable select based on toggle
-            select.prop('disabled', !isChecked);
-
-            if (!isChecked) {
-                select.val('');
-            }
-
-            updateScholarshipStatus(id, isChecked, select.val(), badge, select);
-        });
-
-        $('.scholarship-type').on('change', function() {
-            const id = $(this).data('id');
-            const toggle = $(this).siblings('.scholarship-toggle');
-            const badge = $(this).siblings('label').find('.badge');
-
-            if (toggle.prop('checked')) {
-                updateScholarshipStatus(id, true, $(this).val(), badge, $(this));
-            }
-        });
-
-        function updateScholarshipStatus(id, isChecked, type, badge, element) {
-            $.ajax({
-                url: `/admin/manajemen-mahasiswa/${id}/scholarship-status`,
-                type: 'PATCH',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                data: JSON.stringify({
-                    penerima_beasiswa_full: isChecked,
-                    jenis_beasiswa_full: type
-                }),
-                success: function(response) {
-                    if (response.success) {
-                        badge.removeClass('bg-success bg-secondary')
-                            .addClass(isChecked ? 'bg-success' : 'bg-secondary')
-                            .text(response.data.jenis_beasiswa_full ?
-                                getBeasiswaLabel(response.data.jenis_beasiswa_full) :
-                                'Tidak');
-                        toastr.success(response.message);
-                    }
-                },
-                error: function(xhr) {
-                    element.prop('checked', !isChecked);
-                    toastr.error(xhr.responseJSON?.message || 'Gagal memperbarui status beasiswa');
+            searchButton.click(function() {
+                const nim = searchNim.val();
+                if (nim.length !== 10) {
+                    alert('NIM harus 10 digit');
+                    return;
                 }
-            });
-        }
 
-        function getBeasiswaLabel(type) {
-            const labels = {
-                'aperti_bumn': 'Beasiswa Aperti BUMN',
-                'kip': 'Beasiswa KIP',
-                'unggulan': 'Beasiswa Unggulan'
-            };
-            return labels[type] || 'Tidak';
-        }
+                $.ajax({
+                    url: "{{ route('admin.manajemen-mahasiswa.import') }}",
+                    type: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        nim: nim
+                    },
+                    beforeSend: function() {
+                        searchButton.prop('disabled', true);
+                        searchButton.html(
+                            '<i class="fas fa-spinner fa-spin me-1"></i> Mencari...');
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            const data = response.data;
+                            console.log(data);
+                            $('#nim').val(data.NIM);
+                            $('#nama').val(data['Nama Mahasiswa']);
+                            $('#program_studi').val(data['Program Studi']);
+                            $('#email').val(data.Email);
+                            $('#tahun_masuk').val(data['Tahun Masuk']);
+                            $('#jenis_kelamin').val(data['Jenis Kelamin']);
+                            $('#mahasiswa_transfer').val(data['Mahasiswa Transfer']);
+                            $('#dosen_wali').val(data['Dosen Wali']);
+                            previewCard.removeClass('d-none');
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(xhr) {
+                        alert(xhr.responseJSON?.message || 'Terjadi kesalahan');
+                    },
+                    complete: function() {
+                        searchButton.prop('disabled', false);
+                        searchButton.html('<i class="fas fa-search me-1"></i> Cari');
+                    }
+                });
+            });
+
+            cancelButton.click(function() {
+                previewCard.addClass('d-none');
+                searchNim.val('');
+                importForm[0].reset();
+            });
+
+            importForm.submit(function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: "{{ route('admin.manajemen-mahasiswa.store') }}",
+                    type: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        ...Object.fromEntries(new FormData(this))
+                    },
+                    beforeSend: function() {
+                        $(e.target).find('button[type="submit"]').prop('disabled', true);
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            window.location.reload();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(xhr) {
+                        alert(xhr.responseJSON?.message || 'Terjadi kesalahan');
+                    },
+                    complete: function() {
+                        $(e.target).find('button[type="submit"]').prop('disabled', false);
+                    }
+                });
+            });
+        });
     </script>
 @endpush

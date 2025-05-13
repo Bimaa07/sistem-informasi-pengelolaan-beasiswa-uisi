@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pendaftaran_beasiswa_ongoing', function (Blueprint $table) {
+        Schema::create('periode_monitoring', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('beasiswa_id')->constrained('beasiswa')->onDelete('cascade');
-            $table->enum('status', ['aktif', 'nonaktif', 'ditutup'])->default('aktif');
+            $table->string('tahun_ajaran');
+            $table->enum('semester', ['ganjil', 'genap']);
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
-            $table->text('content')->nullable();
-            $table->string('tahun_ajaran');
+            $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pendaftaran_beasiswa_ongoing');
+        Schema::dropIfExists('periode_monitoring');
     }
 };

@@ -18,9 +18,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('program_studi')->nullable();
             $table->boolean('mahasiswa_transfer')->default(false);
-            $table->string('no_hp')->nullable();
             $table->string('email')->unique();
-            $table->string('dosen_wali')->nullable();
             $table->string('tahun_masuk')->nullable();
             $table->timestamps();
         });

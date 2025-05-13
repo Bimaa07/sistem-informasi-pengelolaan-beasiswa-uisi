@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MonitoringEvaluasi extends Model
+class PenilaianMonitoring extends Model
 {
-    protected $table = 'monitoring_evaluasi';
+    protected $table = 'penilaian_monitoring';
     protected $fillable = [
         'penerima_beasiswa_id',
         'periode_monitoring_id',
@@ -24,14 +24,17 @@ class MonitoringEvaluasi extends Model
     {
         return $this->belongsTo(PeriodeMonitoring::class);
     }
+
     public function scopeActive($query)
     {
         return $query->where('status', 'aktif');
     }
+
     public function scopeInactive($query)
     {
         return $query->where('status', 'nonaktif');
     }
+
     public function scopeCompleted($query)
     {
         return $query->where('status', 'selesai');
