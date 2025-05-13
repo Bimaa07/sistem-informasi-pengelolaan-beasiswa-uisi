@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('tahun_ajaran');
             $table->text('keterangan')->nullable();
             $table->timestamps();
-            $table->unique(['mahasiswa_id', 'periode_id']);
+            $table->unique(['mahasiswa_id', 'beasiswa_id']);
         });
     }
 
