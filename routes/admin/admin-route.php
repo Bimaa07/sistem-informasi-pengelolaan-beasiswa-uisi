@@ -66,14 +66,13 @@ Route::prefix('admin')->group(function () {
         ]);
 
 
-        Route::resource('periode-monitoring', ManajemenPeriodeMonitoringController::class)->names([
-            'index' => 'admin.periode-monitoring.index',
-            'create' => 'admin.periode-monitoring.create',
-            'store' => 'admin.periode-monitoring.store',
-            'edit' => 'admin.periode-monitoring.edit',
-            'update' => 'admin.periode-monitoring.update',
-            'destroy' => 'admin.periode-monitoring.destroy',
-        ]);
+        Route::resource('periode-monitoring', ManajemenPeriodeMonitoringController::class)
+            ->except(['create', 'edit', 'update', 'show'])
+            ->names([
+                'index' => 'admin.periode-monitoring.index',
+                'store' => 'admin.periode-monitoring.store',
+                'destroy' => 'admin.periode-monitoring.destroy',
+            ]);
 
         Route::get('/registered-scholarships', function () {
             return view('admin.registered-scholarships');

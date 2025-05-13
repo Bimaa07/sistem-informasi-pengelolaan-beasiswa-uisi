@@ -8,6 +8,7 @@ class PeriodeMonitoring extends Model
 {
     protected $table = 'periode_monitoring';
     protected $fillable = [
+        'beasiswa_id',
         'tahun_ajaran',
         'semester',
         'tanggal_mulai',

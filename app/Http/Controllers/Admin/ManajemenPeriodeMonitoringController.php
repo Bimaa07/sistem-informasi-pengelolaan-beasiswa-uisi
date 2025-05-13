@@ -3,151 +3,75 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Beasiswa;
 use App\Models\PeriodeMonitoring;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
 class ManajemenPeriodeMonitoringController extends Controller
 {
-    /**
-     * Display a listing of monitoring periods
-     */
-    public function index()
+    public function index(Request $request)
     {
-        try {
-            $periods = PeriodeMonitoring::orderBy('created_at', 'desc')->get();
-            return view('admin.periode-monitoring.index', compact('periods'));
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan dalam memuat data periode monitoring');
+        $query = PeriodeMonitoring::with(['beasiswa']);
+
+        if ($request->has('beasiswa_id')) {
+            $query->where('beasiswa_id', $request->beasiswa_id);
         }
+
+        $periodeMonitoring = $query->latest()->paginate(10);
+        $beasiswa = Beasiswa::all();
+
+        return view('admin.periode-monitoring.index', compact('periodeMonitoring', 'beasiswa'));
     }
 
-    /**
-     * Show the form for creating a new monitoring period
-     */
-    public function create()
-    {
-        return view('admin.periode-monitoring.create');
-    }
-
-    /**
-     * Store a newly created monitoring period
-     */
     public function store(Request $request)
     {
         try {
-            $validator = Validator::make($request->all(), [
+            $validated = $request->validate([
+                'beasiswa_id' => 'required|exists:beasiswa,id',
                 'tahun_ajaran' => 'required|string',
-                'semester_akademik' => 'required|in:ganjil,genap',
-                'tanggal_mulai' => 'required|date',
-                'status' => 'required|in:dibuka,ditutup'
+                'semester' => 'required|in:ganjil,genap',
+                'status' => 'required|in:aktif,nonaktif',
+                'tahun' => 'required|integer'
             ]);
-
-            if ($validator->fails()) {
-                return redirect()->back()
-                    ->withErrors($validator)
-                    ->withInput();
-            }
 
             DB::beginTransaction();
 
-            PeriodeMonitoring::create([
-                'tahun_ajaran' => $request->tahun_ajaran,
-                'semester_akademik' => $request->semester_akademik,
-                'tanggal_mulai' => $request->tanggal_mulai,
-                'status' => $request->status
-            ]);
+            $periodeMonitoring = PeriodeMonitoring::create($validated);
 
             DB::commit();
 
-            return redirect()->route('admin.periode-monitoring.index')
-                ->with('success', 'Periode monitoring berhasil ditambahkan');
+            return response()->json([
+                'success' => true,
+                'message' => 'Periode monitoring berhasil ditambahkan',
+                'data' => $periodeMonitoring
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()
-                ->with('error', 'Terjadi kesalahan dalam menambahkan periode monitoring')
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
         }
     }
 
-    public function edit($id)
-    {
-        try {
-            $period = PeriodeMonitoring::findOrFail($id);
-            // Use raw values for form
-            $period->status = $period->raw_status;
-            $period->semester_akademik = $period->raw_semester_akademik;
-
-            return view('admin.periode-monitoring.edit', compact('period'));
-        } catch (\Exception $e) {
-            return redirect()
-                ->route('admin.periode-monitoring.index')
-                ->with('error', 'Periode monitoring tidak ditemukan');
-        }
-    }
-
-    public function update(Request $request, $id)
-    {
-        try {
-            $validator = Validator::make($request->all(), [
-                'tahun_ajaran' => 'required|string',
-                'semester_akademik' => 'required|in:ganjil,genap',
-                'tanggal_mulai' => 'required|date',
-                'status' => 'required|in:dibuka,ditutup'
-            ]);
-
-            if ($validator->fails()) {
-                return redirect()
-                    ->back()
-                    ->withErrors($validator)
-                    ->withInput();
-            }
-
-            DB::beginTransaction();
-
-            $period = PeriodeMonitoring::findOrFail($id);
-            $period->update([
-                'tahun_ajaran' => $request->tahun_ajaran,
-                'semester_akademik' => $request->semester_akademik,
-                'tanggal_mulai' => $request->tanggal_mulai,
-                'status' => $request->status
-            ]);
-
-            DB::commit();
-
-            return redirect()
-                ->route('admin.periode-monitoring.index')
-                ->with('success', 'Periode monitoring berhasil diperbarui');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return redirect()
-                ->back()
-                ->with('error', 'Terjadi kesalahan dalam memperbarui periode monitoring')
-                ->withInput();
-        }
-    }
-
-
-    /**
-     * Remove the specified monitoring period
-     */
-    public function destroy($id)
+    public function destroy(PeriodeMonitoring $periodeMonitoring)
     {
         try {
             DB::beginTransaction();
-
-            $period = PeriodeMonitoring::findOrFail($id);
-            $period->delete();
-
+            $periodeMonitoring->delete();
             DB::commit();
 
-            return redirect()->route('admin.periode-monitoring.index')
-                ->with('success', 'Periode monitoring berhasil dihapus');
+            return response()->json([
+                'success' => true,
+                'message' => 'Periode monitoring berhasil dihapus'
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()
-                ->with('error', 'Terjadi kesalahan dalam menghapus periode monitoring');
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
         }
     }
 }

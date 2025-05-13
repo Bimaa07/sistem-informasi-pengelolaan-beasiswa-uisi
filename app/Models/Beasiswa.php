@@ -11,4 +11,13 @@ class Beasiswa extends Model
         'jenis',
         'nama',
     ];
+
+    public function periodeMonitoring()
+    {
+        return $this->hasMany(PeriodeMonitoring::class);
+    }
+    public function penerimaBeasiswa()
+    {
+        return $this->hasMany(PenerimaBeasiswa::class);
+    }
 }

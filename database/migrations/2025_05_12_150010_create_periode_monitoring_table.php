@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('periode_monitoring', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('beasiswa_id')->constrained('beasiswa')->onDelete('cascade');
             $table->string('tahun_ajaran');
             $table->enum('semester', ['ganjil', 'genap']);
-            $table->date('tanggal_mulai');
-            $table->date('tanggal_selesai');
+            $table->year('tahun');
             $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');
             $table->timestamps();
         });
