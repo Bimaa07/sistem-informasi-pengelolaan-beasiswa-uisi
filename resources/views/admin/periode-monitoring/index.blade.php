@@ -20,16 +20,10 @@
             </div>
         </div>
         <!--end::Toolbar-->
+
         <!--begin::Content-->
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-fluid">
-                @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                @endif
-
                 <div class="card">
                     <div class="card-header border-0 pt-6">
                         <div class="card-title">
@@ -101,7 +95,8 @@
         <!--end::Content-->
     </div>
 </div>
-<!--begin::Modal-->
+
+<!--begin::Modal Tambah-->
 <div class="modal fade" tabindex="-1" id="modal_tambah_periode">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -125,11 +120,6 @@
                             </option>
                             @endforeach
                         </select>
-                    </div>
-
-                    <div class="mb-5">
-                        <label class="form-label required">Tahun</label>
-                        <input type="number" name="tahun" class="form-control" value="{{ date('Y') }}" required>
                     </div>
 
                     <div class="mb-5">
@@ -172,7 +162,9 @@
         </div>
     </div>
 </div>
-<!--begin::Edit Modal-->
+<!--end::Modal Tambah-->
+
+<!--begin::Modal Edit-->
 <div class="modal fade" tabindex="-1" id="modal_edit_periode">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -197,11 +189,6 @@
                             <option value="{{ $item->id }}">{{ $item->nama }}</option>
                             @endforeach
                         </select>
-                    </div>
-
-                    <div class="mb-5">
-                        <label class="form-label required">Tahun</label>
-                        <input type="number" name="tahun" class="form-control" required>
                     </div>
 
                     <div class="mb-5">
@@ -244,60 +231,58 @@
         </div>
     </div>
 </div>
-<!--end::Edit Modal-->
-<!--end::Modal-->
+<!--end::Modal Edit-->
 @endsection
 
 @push('scripts')
 <script>
     $(document).ready(function() {
+    // Initialize tooltips
     $('[data-bs-toggle="tooltip"]').tooltip();
-    const internalUrls = [
-    "{{ route('admin.periode-monitoring.store') }}",
-    "/admin/periode-monitoring"
-    ];
 
-$(document).ajaxSend(function(e, xhr, options) {
-// Check if this is an internal route
-if (options.url.startsWith('/admin/')) {
-xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
-}
-});
-    // Show modal
+    // Setup CSRF token for AJAX requests
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    // Show add modal
     $('#tambah_periode').click(function() {
-    new bootstrap.Modal('#modal_tambah_periode').show();
+        new bootstrap.Modal('#modal_tambah_periode').show();
     });
 
-    // Form submission
+    // Form add submission
     $('#form_tambah_periode').submit(function(e) {
-    e.preventDefault();
+        e.preventDefault();
 
-    const form = $(this);
-    const submitButton = form.find('[type="submit"]');
+        const form = $(this);
+        const submitButton = form.find('[type="submit"]');
 
-    submitButton.attr('data-kt-indicator', 'on');
-    submitButton.prop('disabled', true);
+        submitButton.attr('data-kt-indicator', 'on');
+        submitButton.prop('disabled', true);
 
-    $.ajax({
-    url: "{{ route('admin.periode-monitoring.store') }}",
-    type: 'POST',
-    data: form.serialize(),
-    success: function(response) {
-    if (response.success) {
-    window.location.reload();
-    } else {
-    alert(response.message);
-    }
-    },
-    error: function(xhr) {
-    alert(xhr.responseJSON?.message || 'Terjadi kesalahan');
-    },
-    complete: function() {
-    submitButton.attr('data-kt-indicator', 'off');
-    submitButton.prop('disabled', false);
-    }
+        $.ajax({
+            url: "{{ route('admin.periode-monitoring.store') }}",
+            type: 'POST',
+            data: form.serialize(),
+            success: function(response) {
+                if (response.success) {
+                    window.location.reload();
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function(xhr) {
+                alert(xhr.responseJSON?.message || 'Terjadi kesalahan');
+            },
+            complete: function() {
+                submitButton.attr('data-kt-indicator', 'off');
+                submitButton.prop('disabled', false);
+            }
+        });
     });
-    });
+
     // Filter change handler
     $('#filter_beasiswa').change(function() {
         const beasiswaId = $(this).val();
@@ -312,37 +297,10 @@ xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'
         window.location.href = url.toString();
     });
 
-    // Delete handler
-    $('.delete-periode').click(function() {
-    if (!confirm('Apakah Anda yakin ingin menghapus periode ini?')) {
-    return;
-    }
-
-    const button = $(this);
-    const id = button.data('id');
-
-    $.ajax({
-    url: `/admin/periode-monitoring/${id}`,
-    type: 'DELETE',
-    success: function(response) {
-    if (response.success) {
-    window.location.reload();
-    } else {
-    alert(response.message);
-    }
-    },
-    error: function(xhr) {
-    alert(xhr.responseJSON?.message || 'Terjadi kesalahan');
-    }
-    });
-    });
-
-        // Add this to your existing $(document).ready function
     // Edit handler
     $('.edit-periode').click(function() {
         const id = $(this).data('id');
 
-        // Get periode data
         $.ajax({
             url: `/admin/periode-monitoring/${id}/edit`,
             type: 'GET',
@@ -350,15 +308,12 @@ xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'
                 if (response.success) {
                     const data = response.data;
 
-                    // Fill form
                     $('#edit_id').val(data.id);
                     $('#form_edit_periode select[name="beasiswa_id"]').val(data.beasiswa_id);
-                    $('#form_edit_periode input[name="tahun"]').val(data.tahun);
                     $('#form_edit_periode select[name="tahun_ajaran"]').val(data.tahun_ajaran);
                     $('#form_edit_periode select[name="semester"]').val(data.semester);
                     $('#form_edit_periode select[name="status"]').val(data.status);
 
-                    // Show modal
                     new bootstrap.Modal('#modal_edit_periode').show();
                 } else {
                     alert(response.message);
@@ -398,6 +353,31 @@ xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'
             complete: function() {
                 submitButton.attr('data-kt-indicator', 'off');
                 submitButton.prop('disabled', false);
+            }
+        });
+    });
+
+    // Delete handler
+    $('.delete-periode').click(function() {
+        if (!confirm('Apakah Anda yakin ingin menghapus periode ini?')) {
+            return;
+        }
+
+        const button = $(this);
+        const id = button.data('id');
+
+        $.ajax({
+            url: `/admin/periode-monitoring/${id}`,
+            type: 'DELETE',
+            success: function(response) {
+                if (response.success) {
+                    window.location.reload();
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function(xhr) {
+                alert(xhr.responseJSON?.message || 'Terjadi kesalahan');
             }
         });
     });

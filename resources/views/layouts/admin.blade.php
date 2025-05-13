@@ -35,8 +35,8 @@ License: For each use you must have a valid license purchased only from above li
     <!--begin::Vendor Stylesheets(used for this page only)-->
     <!--end::Vendor Stylesheets-->
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
-    {{--
-    <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Then load other styles -->
     @vite(['resources/css/plugins.bundle.css', 'resources/css/style.bundle.css', 'resources/js/app.js'])

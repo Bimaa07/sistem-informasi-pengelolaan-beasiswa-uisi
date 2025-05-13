@@ -36,4 +36,8 @@ class Mahasiswa extends Model
     {
         return $this->where('email', $email)->first();
     }
+    public function penerimaBeasiswa()
+    {
+        return $this->hasMany(PenerimaBeasiswa::class);
+    }
 }

@@ -29,16 +29,25 @@ class ManajemenPeriodeMonitoringController extends Controller
         try {
             $validated = $request->validate([
                 'beasiswa_id' => 'required|exists:beasiswa,id',
-                'tahun_ajaran' => 'required|string',
+                'tahun_ajaran' => [
+                    'required',
+                    'string',
+                    'regex:/^\d{4}\/\d{4}$/', // Format: "2024/2025"
+                ],
                 'semester' => 'required|in:ganjil,genap',
-                'status' => 'required|in:aktif,nonaktif',
-                'tahun' => 'required|integer'
+                'status' => 'required|in:aktif,nonaktif'
             ]);
 
+            // Validate that end year is start year + 1
+            $tahunAwal = (int) substr($validated['tahun_ajaran'], 0, 4);
+            $tahunAkhir = (int) substr($validated['tahun_ajaran'], 5, 4);
+
+            if ($tahunAkhir !== $tahunAwal + 1) {
+                throw new \Exception('Format tahun ajaran tidak valid. Tahun akhir harus tahun awal + 1');
+            }
+
             DB::beginTransaction();
-
             $periodeMonitoring = PeriodeMonitoring::create($validated);
-
             DB::commit();
 
             return response()->json([
@@ -88,10 +97,13 @@ class ManajemenPeriodeMonitoringController extends Controller
         try {
             $validated = $request->validate([
                 'beasiswa_id' => 'required|exists:beasiswa,id',
-                'tahun_ajaran' => 'required|string',
+                'tahun_ajaran' => [
+                    'required',
+                    'string',
+                    'regex:/^\d{4}\/\d{4}$/', // Format: "2024/2025"
+                ],
                 'semester' => 'required|in:ganjil,genap',
                 'status' => 'required|in:aktif,nonaktif',
-                'tahun' => 'required|integer'
             ]);
 
             DB::beginTransaction();

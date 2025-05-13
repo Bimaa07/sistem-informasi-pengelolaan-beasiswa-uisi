@@ -37,4 +37,16 @@ class PeriodeMonitoring extends Model
     {
         return $this->belongsTo(Beasiswa::class);
     }
+
+    // Get start year from tahun_ajaran
+    public function getTahunAwalAttribute()
+    {
+        return (int) substr($this->tahun_ajaran, 0, 4);
+    }
+
+    // Get end year from tahun_ajaran
+    public function getTahunAkhirAttribute()
+    {
+        return (int) substr($this->tahun_ajaran, 5, 4);
+    }
 }

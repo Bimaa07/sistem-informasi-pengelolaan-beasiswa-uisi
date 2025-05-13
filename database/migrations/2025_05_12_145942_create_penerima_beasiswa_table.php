@@ -16,8 +16,6 @@ return new class extends Migration
             $table->foreignId('mahasiswa_id')->constrained('mahasiswa')->onDelete('cascade');
             $table->foreignId('beasiswa_id')->constrained('beasiswa')->onDelete('cascade');
             $table->enum('status', ['aktif', 'nonaktif', 'lulus', 'diberhentikan'])->default('aktif');
-            $table->year(('tahun_masuk'));
-            $table->string('tahun_ajaran');
             $table->text('keterangan')->nullable();
             $table->timestamps();
             $table->unique(['mahasiswa_id', 'beasiswa_id']);

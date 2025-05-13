@@ -59,6 +59,11 @@ Route::prefix('admin')->group(function () {
         Route::put('/periode-monitoring/{periodeMonitoring}', [ManajemenPeriodeMonitoringController::class, 'update'])
             ->name('admin.periode-monitoring.update');
 
+        Route::post('/manajemen-beasiswa-mahasiswa/{penerimaBeasiswa}/nonaktif', [ManajemenBeasiswaMahasiswaController::class, 'nonaktif'])
+            ->name('admin.manajemen-beasiswa-mahasiswa.nonaktif');
+        Route::post('/manajemen-beasiswa-mahasiswa/{penerimaBeasiswa}/aktif', [ManajemenBeasiswaMahasiswaController::class, 'aktif'])
+            ->name('admin.manajemen-beasiswa-mahasiswa.aktif');
+
         Route::resource('beasiswa', BeasiswaController::class)->names([
             'index' => 'admin.beasiswa.index',
             'create' => 'admin.beasiswa.create',

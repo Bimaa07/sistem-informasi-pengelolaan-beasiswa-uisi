@@ -10,8 +10,6 @@ class PenerimaBeasiswa extends Model
     protected $fillable = [
         'mahasiswa_id',
         'beasiswa_id',
-        'tahun_masuk',
-        'tahun_ajaran',
         'status',
     ];
 
