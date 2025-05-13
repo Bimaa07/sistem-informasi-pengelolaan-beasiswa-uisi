@@ -124,7 +124,7 @@ class ManagementMahasiswaController extends Controller
                 $user = User::create([
                     'name' => $validated['nama'],
                     'email' => $validated['email'],
-                    'role_id' => 3, // Mahasiswa role
+                    'role_id' => 1, // Mahasiswa role
                 ]);
             }
 
@@ -160,10 +160,13 @@ class ManagementMahasiswaController extends Controller
 
     private function makeApiRequest(string $nim)
     {
-        return Http::withHeaders([
-            'Authorization' => $this->apiToken,
+        return Http::withOptions([
+            'verify' => false
+        ])->withHeaders([
+            'authorization' => $this->apiToken,
             'Content-Type' => 'application/json',
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'X-Requested-With' => 'XMLHttpRequest'
         ])->timeout(5)->post($this->apiUrl, [
             'apply_auto_limit' => false,
             'max_age' => 10,

@@ -11,8 +11,7 @@ class PeriodeMonitoring extends Model
         'beasiswa_id',
         'tahun_ajaran',
         'semester',
-        'tanggal_mulai',
-        'tanggal_selesai',
+        'tahun',
         'status',
     ];
 
@@ -32,5 +31,10 @@ class PeriodeMonitoring extends Model
     public function scopeInactive($query)
     {
         return $query->where('status', 'nonaktif');
+    }
+
+    public function beasiswa()
+    {
+        return $this->belongsTo(Beasiswa::class);
     }
 }

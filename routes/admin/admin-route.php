@@ -54,6 +54,10 @@ Route::prefix('admin')->group(function () {
 
         Route::post('/manajemen-beasiswa-mahasiswa/store', [ManajemenBeasiswaMahasiswaController::class, 'store'])
             ->name('admin.manajemen-beasiswa-mahasiswa.store');
+        Route::get('/periode-monitoring/{periodeMonitoring}/edit', [ManajemenPeriodeMonitoringController::class, 'edit'])
+            ->name('admin.periode-monitoring.edit');
+        Route::put('/periode-monitoring/{periodeMonitoring}', [ManajemenPeriodeMonitoringController::class, 'update'])
+            ->name('admin.periode-monitoring.update');
 
         Route::resource('beasiswa', BeasiswaController::class)->names([
             'index' => 'admin.beasiswa.index',

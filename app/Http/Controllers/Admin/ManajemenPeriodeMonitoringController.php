@@ -74,4 +74,43 @@ class ManajemenPeriodeMonitoringController extends Controller
             ], 500);
         }
     }
+
+    public function edit(PeriodeMonitoring $periodeMonitoring)
+    {
+        return response()->json([
+            'success' => true,
+            'data' => $periodeMonitoring
+        ]);
+    }
+
+    public function update(Request $request, PeriodeMonitoring $periodeMonitoring)
+    {
+        try {
+            $validated = $request->validate([
+                'beasiswa_id' => 'required|exists:beasiswa,id',
+                'tahun_ajaran' => 'required|string',
+                'semester' => 'required|in:ganjil,genap',
+                'status' => 'required|in:aktif,nonaktif',
+                'tahun' => 'required|integer'
+            ]);
+
+            DB::beginTransaction();
+
+            $periodeMonitoring->update($validated);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Periode monitoring berhasil diperbarui',
+                'data' => $periodeMonitoring
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }

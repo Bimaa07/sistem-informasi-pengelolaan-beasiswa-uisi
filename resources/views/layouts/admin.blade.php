@@ -35,11 +35,15 @@ License: For each use you must have a valid license purchased only from above li
     <!--begin::Vendor Stylesheets(used for this page only)-->
     <!--end::Vendor Stylesheets-->
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+    {{--
+    <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
 
     <!-- Then load other styles -->
     @vite(['resources/css/plugins.bundle.css', 'resources/css/style.bundle.css', 'resources/js/app.js'])
 
-    @vite(['resources/assets/plugins/custom/datatables/datatables.bundle.css', 'resources/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css', 'resources/assets/plugins/global/plugins.bundle.css'])
+    @vite(['resources/assets/plugins/custom/datatables/datatables.bundle.css',
+    'resources/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css',
+    'resources/assets/plugins/global/plugins.bundle.css'])
     <!--end::Global Stylesheets Bundle-->
 
 </head>
@@ -106,10 +110,15 @@ License: For each use you must have a valid license purchased only from above li
     <script src="{{ Vite::asset('resources/js/plugins.bundle.js') }}"></script>
     <script src="{{ Vite::asset('resources/js/scripts.bundle.js') }}"></script>
     {{-- <script src="plugins.bundle.js"></script> --}}
-    @vite(['resources/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js', 'resources/assets/js/widgets.bundle.js', 'resources/assets/js/custom/widgets.js', 'resources/assets/js/custom/apps/chat/chat.js', 'resources/assets/js/custom/utilities/modals/upgrade-plan.js', 'resources/assets/js/custom/utilities/modals/create-app.js', 'resources/assets/js/custom/utilities/modals/users-search.js'])
+    @vite(['resources/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js',
+    'resources/assets/js/widgets.bundle.js', 'resources/assets/js/custom/widgets.js',
+    'resources/assets/js/custom/apps/chat/chat.js', 'resources/assets/js/custom/utilities/modals/upgrade-plan.js',
+    'resources/assets/js/custom/utilities/modals/create-app.js',
+    'resources/assets/js/custom/utilities/modals/users-search.js'])
 
     <!-- Load remaining styles -->
-    @vite(['resources/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css', 'resources/assets/plugins/global/plugins.bundle.css'])
+    @vite(['resources/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css',
+    'resources/assets/plugins/global/plugins.bundle.css'])
     <!--end::Custom Javascript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
